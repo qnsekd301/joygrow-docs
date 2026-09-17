@@ -1,0 +1,12 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+version: 1
+site:
+  title: JoyGrow 사용 설명서
+  structure:
+    - type: space
+      key: space-joygrow-docs
+      title: JoyGrow 사용 설명서
+      path: joygrow-docs
+      default: true
+      content:
+        directory: .
