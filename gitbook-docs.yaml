@@ -10,3 +10,9 @@ site:
       default: true
       content:
         directory: .
+    - type: space
+      key: space-joygrow-ministry-ops
+      title: JoyGrow 교역자 운영 노트
+      path: ministry-operations
+      content:
+        directory: ./ministry-admin
