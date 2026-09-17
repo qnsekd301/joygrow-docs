@@ -2,7 +2,7 @@
 
 선생님은 출석부 안에서 출석과 JoyGrow 칭찬을 함께 기록합니다.
 
-![선생님 홈](<../.gitbook/assets/home (1).png>)
+![선생님 홈](../images/teacher/home.png)
 
 ## 주일에 이 순서로 하세요
 
