@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T06:38:57.988Z",
+  "generatedAt": "2026-09-17T08:19:58.959Z",
   "joygrowBaseUrl": "http://127.0.0.1:3117",
   "attendanceBaseUrl": "http://127.0.0.1:4187",
   "captured": [
@@ -40,7 +40,25 @@
     "teacher/account-settings.png",
     "teacher/support-praise.png",
     "admin/attendance-home.png",
+    "admin/attendance-ourclass.png",
+    "admin/attendance-ministry.png",
+    "admin/attendance-students.png",
+    "admin/attendance-sunday-report.png",
+    "admin/attendance-all-menu.png",
     "admin/attendance-control.png",
+    "admin/attendance-finance.png",
+    "admin/attendance-birthdays.png",
+    "admin/attendance-duty.png",
+    "admin/attendance-new-family.png",
+    "admin/attendance-messages.png",
+    "admin/attendance-accounts.png",
+    "admin/attendance-long-term.png",
+    "admin/attendance-google-sheet.png",
+    "admin/attendance-integrity.png",
+    "admin/attendance-trash.png",
+    "admin/attendance-pastoral.png",
+    "admin/attendance-search.png",
+    "admin/attendance-account-settings.png",
     "teacher/approval-pending.png"
   ],
   "skipped": []

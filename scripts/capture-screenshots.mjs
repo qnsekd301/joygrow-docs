@@ -63,12 +63,18 @@ async function startLocalAttendance() {
 }
 
 const demoStudents = [
-  { id: 'student-joy', name: '기쁨이', class_id: 'class-demo', birth: '2015-03-01', active: true },
-  { id: 'student-faith', name: '믿음이', class_id: 'class-demo', birth: '2015-04-02', active: true },
-  { id: 'student-hope', name: '소망이', class_id: 'class-demo', birth: '2015-05-03', active: true },
-  { id: 'student-love', name: '사랑이', class_id: 'class-demo', birth: '2015-06-04', active: true },
+  { id: 'student-joy', name: '기쁨이', class_id: 'class-demo', birth: '2015-09-21', school: '송림초', phone: '010-0000-0001', start_date: '2026-01-04', active: true },
+  { id: 'student-faith', name: '믿음이', class_id: 'class-demo', birth: '2015-10-02', school: '송림초', phone: '010-0000-0002', start_date: '2026-01-04', active: true },
+  { id: 'student-hope', name: '소망이', class_id: 'class-demo', birth: '2015-08-13', school: '분당초', phone: '010-0000-0003', start_date: '2026-01-04', active: true },
+  { id: 'student-love', name: '사랑이', class_id: 'class-demo', birth: '2015-09-28', school: '분당초', phone: '010-0000-0004', start_date: '2026-01-04', active: true },
 ];
 const demoClass = { id: 'class-demo', name: '6-1', service: '1부', teacher_name: '데모 선생님' };
+for (const student of demoStudents) student.classes = demoClass;
+const latestSunday = (() => {
+  const date = new Date();
+  date.setDate(date.getDate() - date.getDay());
+  return date.toISOString().slice(0, 10);
+})();
 const activityDefinitions = [
   ['word_focus', '말씀 집중', 5], ['praise_passion', '찬양 열정', 5], ['friend_help', '친구 도움', 5],
   ['teacher_help', '선생님 도움', 5], ['pretty_words', '예쁜 말', 5], ['chant_complete', '챈트 완료', 10], ['friend_invite', '친구 전도', 20],
@@ -101,10 +107,24 @@ async function installAttendanceFixtures(context, role = 'teacher') {
     let body = [];
     if (url.pathname.includes('/auth/v1/user')) body = session.user;
     else if (url.pathname.includes('/auth/v1/token')) body = session;
-    else if (url.pathname.includes('/rest/v1/profiles')) body = objectResponse ? profile : [profile];
+    else if (url.pathname.includes('/rest/v1/profiles')) body = objectResponse ? profile : [profile, { id: 'teacher-demo', role: 'teacher', display_name: '데모 선생님', class_id: 'class-demo', service_scope: '1부', approval_status: 'approved' }];
     else if (url.pathname.includes('/rest/v1/classes')) body = objectResponse ? demoClass : [demoClass];
-    else if (url.pathname.includes('/rest/v1/students')) body = demoStudents;
-    else if (url.pathname.includes('/rest/v1/attendance')) body = demoStudents.slice(0, 3).map((student, index) => ({ id: `attendance-${index}`, student_id: student.id, date: new Date().toISOString().slice(0, 10), present: index !== 2, snack: index === 0, snack_tier: index === 0 ? 1 : null }));
+    else if (url.pathname.includes('/rest/v1/students')) body = objectResponse ? demoStudents[0] : demoStudents;
+    else if (url.pathname.includes('/rest/v1/attendance')) body = demoStudents.map((student, index) => ({ id: `attendance-${index}`, student_id: student.id, class_id: 'class-demo', attendance_date: latestSunday, present: index < 2, reason: index === 2 ? '가족 일정' : index === 3 ? '건강 회복 중' : '', snack: index === 0, snack_tier: index === 0 ? 1 : null, discretion: index === 1 }));
+    else if (url.pathname.includes('/rest/v1/duty_schedule')) body = [{ id: 'duty-1', duty_date: latestSunday, service: '1부', duty_type: 'prayer', student_id: 'student-joy', student_name: '기쁨이' }, { id: 'duty-2', duty_date: latestSunday, service: '1부', duty_type: 'offering', student_id: 'student-faith', student_name: '믿음이' }];
+    else if (url.pathname.includes('/rest/v1/long_term_absences')) body = [{ id: 'long-1', student_id: 'student-love', start_date: latestSunday, reason: '치료와 회복', detail: '보호자와 연락하며 복귀 일정을 확인합니다.', next_contact_date: latestSunday, active: true, today_checked: false, students: demoStudents[3] }];
+    else if (url.pathname.includes('/rest/v1/planned_absences')) body = [{ id: 'plan-1', student_id: 'student-hope', start_date: latestSunday, end_date: latestSunday, reason: '가족 일정', detail: '다음 주 복귀 예정', active: true }];
+    else if (url.pathname.includes('/rest/v1/new_family_submissions')) body = [{ id: 'new-1', student_name: '새롬이', birth: '2016-05-05', school: '송림초', service: '1부', status: 'pending', guardian_name: '보호자', guardian_phone: '010-0000-0010', created_at: new Date().toISOString() }];
+    else if (url.pathname.includes('/rest/v1/new_family_education_records')) body = [];
+    else if (url.pathname.includes('/rest/v1/messages')) body = [{ id: 'message-1', title: '주일 출석 확인 안내', content: '예배 후 결석 사유를 확인해 주세요.', target_class_id: 'class-demo', created_at: new Date().toISOString(), read: false }];
+    else if (url.pathname.includes('/rest/v1/sunday_reports')) body = [{ id: 'report-1', report_date: latestSunday, service: '1부', student_count: 2, teacher_count: 1, visitor_count: 1, new_family_count: 1, offering_amount: 30000, notes: '새가족 환영 및 결석 학생 안부 확인' }];
+    else if (url.pathname.includes('/rest/v1/deleted_students')) body = [{ id: 'deleted-1', name: '복구예시', deleted_at: new Date().toISOString(), class_name: '6-1', service: '1부' }];
+    else if (url.pathname.includes('/rest/v1/app_settings')) body = [{ key: 'google_sheet_url', value: 'https://script.google.com/macros/s/DEMO/exec' }, { key: 'google_sheet_link', value: 'https://docs.google.com/spreadsheets/d/DEMO' }];
+    else if (url.pathname.includes('/rest/v1/care_visit_requests')) body = [];
+    else if (url.pathname.includes('/rest/v1/pastoral_care_items')) body = [{ id: 'care-1', person_name: '소망이', subject_type: 'student', title: '결석 후 안부 확인', summary: '가족 일정 후 다음 주 복귀 예정', category: 'attendance', status: 'in_progress', follow_up_date: latestSunday, next_action: '담당 교사 연락' }];
+    else if (url.pathname.includes('/rest/v1/pastoral_contacts')) body = [];
+    else if (url.pathname.includes('/rest/v1/finance_center_settings')) body = objectResponse ? null : [];
+    else if (url.pathname.includes('/rest/v1/rpc/check_data_integrity')) body = [{ check_type: 'unassigned_students', severity: 'warning', count: 1, details: [{ name: '확인학생' }] }];
     else if (url.pathname.includes('/rest/v1/rpc/')) body = [];
     await route.fulfill({ status: 200, contentType: 'application/json', headers: { 'content-range': '0-3/4' }, body: JSON.stringify(body) });
   });
@@ -365,13 +385,80 @@ async function captureAttendanceDemo(browser, role) {
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(1_200);
   if (role === 'admin') {
-    await screenshot(page, 'admin/attendance-home.png');
-    const joyGrowButton = page.locator('button').filter({ hasText: /^JoyGrow$/ }).last();
-    if (await joyGrowButton.count()) {
-      await joyGrowButton.click();
+    async function captureAdminPage(file) {
       await page.waitForTimeout(900);
+      await screenshot(page, `admin/${file}`, {
+        callouts: [
+          { selector: '.workspace-title-copy', number: 1 },
+          { selector: '.workspace-page', number: 2 },
+          { selector: 'nav[aria-label="주요 메뉴"]', number: 3 },
+        ],
+      });
     }
-    await screenshot(page, 'admin/attendance-control.png');
+    await captureAdminPage('attendance-home.png');
+    for (const [label, file] of [
+      ['반별 출석', 'attendance-ourclass.png'],
+      ['결석', 'attendance-ministry.png'],
+      ['학생', 'attendance-students.png'],
+      ['주일보고', 'attendance-sunday-report.png'],
+      ['전체', 'attendance-all-menu.png'],
+    ]) {
+      const navButton = page.locator('nav[aria-label="주요 메뉴"] button').filter({ hasText: label }).last();
+      if (!(await navButton.count())) throw new Error(`관리자 주요 메뉴를 찾지 못했습니다: ${label}`);
+      await navButton.click();
+      await captureAdminPage(file);
+    }
+    for (const [label, file] of [
+      ['JoyGrow', 'attendance-control.png'],
+      ['재정센터', 'attendance-finance.png'],
+      ['생일', 'attendance-birthdays.png'],
+      ['기도·헌금', 'attendance-duty.png'],
+      ['새가족', 'attendance-new-family.png'],
+      ['메시지', 'attendance-messages.png'],
+      ['계정·반', 'attendance-accounts.png'],
+      ['장결 관리', 'attendance-long-term.png'],
+      ['구글 시트', 'attendance-google-sheet.png'],
+      ['데이터 점검', 'attendance-integrity.png'],
+      ['휴지통', 'attendance-trash.png'],
+    ]) {
+      const allMenu = page.locator('nav[aria-label="주요 메뉴"] button').filter({ hasText: '전체' }).last();
+      await allMenu.click();
+      await page.waitForTimeout(250);
+      const toolButton = page.locator('main button').filter({ hasText: label }).last();
+      if (!(await toolButton.count())) throw new Error(`관리자 전체 메뉴를 찾지 못했습니다: ${label}`);
+      await toolButton.click();
+      await captureAdminPage(file);
+    }
+    const allMenu = page.locator('nav[aria-label="주요 메뉴"] button').filter({ hasText: '전체' }).last();
+    await allMenu.click();
+    await page.waitForTimeout(250);
+    const pastoralButton = page.locator('main button').filter({ hasText: '목양센터' }).last();
+    if (await pastoralButton.count()) {
+      const popupPromise = context.waitForEvent('page');
+      await pastoralButton.click();
+      const pastoralPage = await popupPromise;
+      await pastoralPage.waitForLoadState('networkidle');
+      await pastoralPage.waitForTimeout(1_000);
+      await screenshot(pastoralPage, 'admin/attendance-pastoral.png', { fullPage: true });
+      await pastoralPage.close();
+    }
+    const homeButton = page.locator('nav[aria-label="주요 메뉴"] button').filter({ hasText: '홈' }).last();
+    await homeButton.click();
+    await page.waitForTimeout(700);
+    const searchButton = page.locator('button[aria-label="빠른 검색"]');
+    if (await searchButton.count()) {
+      await searchButton.click();
+      await page.waitForTimeout(250);
+      await screenshot(page, 'admin/attendance-search.png', { fullPage: false });
+      await page.keyboard.press('Escape');
+    }
+    const accountButton = page.locator('button[aria-label="계정 설정"]');
+    if (await accountButton.count()) {
+      await accountButton.click();
+      await page.waitForTimeout(250);
+      await screenshot(page, 'admin/attendance-account-settings.png', { fullPage: false });
+      await page.keyboard.press('Escape');
+    }
   } else if (role === 'support') {
     await screenshot(page, 'teacher/support-praise.png');
   } else if (role === 'pending') {
