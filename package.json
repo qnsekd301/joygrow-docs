@@ -1,0 +1,15 @@
+{
+  "name": "joygrow-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:capture": "node scripts/capture-screenshots.mjs",
+    "docs:check": "node scripts/check-docs.mjs && node scripts/validate-gitbook-config.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "playwright": "^1.55.0",
+    "yaml": "^2.8.1"
+  }
+}
