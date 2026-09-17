@@ -4,7 +4,7 @@
 
 ## 출석부 JoyGrow 통제센터
 
-![출석부 JoyGrow 통제센터](../images/admin/attendance-control.png)
+![출석부 JoyGrow 통제센터](../.gitbook/assets/attendance-control.png)
 
 운영 현황, 랭킹, 학생별 포인트, 성장 항목, 이벤트와 선생님 지급 로그를 확인합니다.
 
@@ -12,29 +12,29 @@ GPT 일괄 입력은 여러 학생 활동을 한꺼번에 정리할 때만 사�
 
 ## 성장 활동과 이벤트
 
-![성장 활동 관리](../images/admin/growth-activities.png)
+![성장 활동 관리](../.gitbook/assets/growth-activities.png)
 
 활동 이름, 포인트, EXP, 주간 한도와 활성 상태를 관리합니다. 이벤트는 시작일과 종료일을 확인하고, 끝난 이벤트가 계속 켜져 있지 않도록 합니다.
 
 ## 포인트 상점과 주문
 
-![포인트 상점 관리](../images/admin/store.png)
+![포인트 상점 관리](<../.gitbook/assets/store (1).png>)
 
 상품의 가격, 재고와 공개 가능한 이미지를 관리합니다. 대기 주문만 취소할 수 있으며, 실제 전달 후 수령 완료로 처리합니다.
 
 ## 성경 인물과 믿음 원정대
 
-![믿음 원정대 관리](../images/admin/faith-adventure.png)
+![믿음 원정대 관리](../.gitbook/assets/faith-adventure.png)
 
 인물 변경 요청, 시즌, 지역, 퀘스트와 아이템을 관리합니다. 진행 중인 조건을 바꾸기 전 학생 기록에 미치는 영향을 확인하세요.
 
 ## 성장 정책과 감사 로그
 
-![성장 정책](../images/admin/policy.png)
+![성장 정책](../.gitbook/assets/policy.png)
 
 점수 환산과 꾸준함 보너스를 바꾸기 전 현재 값, 변경 이유와 적용일을 기록합니다.
 
-![감사 로그](../images/admin/audit-log.png)
+![감사 로그](../.gitbook/assets/audit-log.png)
 
 포인트, 상품, 정책이나 요청 결과가 예상과 다르면 변경한 사람, 시간과 전후 값을 확인합니다.
 

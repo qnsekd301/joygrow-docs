@@ -1,18 +1,18 @@
-# 송림소년부 JoyGrow 공식 가이드
+# JoyGrow 공식 가이드
 
 JoyGrow는 예배와 좋은 행동을 포인트와 성장 경험으로 이어 주는 송림소년부 시스템입니다.
 
-![JoyGrow 주인공 홈](images/student/home.png)
+![JoyGrow 주인공 홈](.gitbook/assets/home.png)
 
 ## 누구신가요?
 
-| 사용자 | 바로가기 |
-|---|---|
-| 처음 보는 분·학부모 | [JoyGrow 한눈에 보기](getting-started/README.md) |
-| 주인공(학생) | [주인공 사용법](student/README.md) |
-| 선생님 | [선생님 사용법](teacher/README.md) |
-| 관리자 | [관리자 사용법](admin/README.md) |
-| 문제가 생긴 분 | [도움말](help/README.md) |
+| 사용자         | 바로가기                               |
+| ----------- | ---------------------------------- |
+| 처음 보는 분·학부모 | [JoyGrow 한눈에 보기](getting-started/) |
+| 주인공(학생)     | [주인공 사용법](student/)                |
+| 선생님         | [선생님 사용법](teacher/)                |
+| 관리자         | [관리자 사용법](admin/)                  |
+| 문제가 생긴 분    | [도움말](help/)                       |
 
 ## 한 줄로 이해하기
 

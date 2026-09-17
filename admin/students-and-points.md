@@ -2,7 +2,7 @@
 
 학생을 검색해 기본 정보와 포인트를 확인하거나 조정합니다.
 
-![학생 관리 화면](../images/admin/students.png)
+![학생 관리 화면](../.gitbook/assets/students.png)
 
 ## 학생 정보
 
@@ -11,7 +11,7 @@
 3. 새 학생은 추가하고 기존 학생은 정보를 수정합니다.
 4. 출석부와 JoyGrow의 부서·반이 맞는지 확인합니다.
 
-![학생 정보 수정](../images/admin/student-edit-dialog.png)
+![학생 정보 수정](../.gitbook/assets/student-edit-dialog.png)
 
 ## 포인트 조정
 
@@ -20,6 +20,6 @@
 3. 알아볼 수 있는 짧은 사유를 남깁니다.
 4. 저장 뒤 학생 화면과 감사 로그를 확인합니다.
 
-![포인트 조정 창](../images/admin/student-points-dialog.png)
+![포인트 조정 창](../.gitbook/assets/student-points-dialog.png)
 
 > 포인트는 0보다 작아질 수 없습니다. 선생님의 잘못 지급은 최근 지급 취소를 먼저 사용합니다.
