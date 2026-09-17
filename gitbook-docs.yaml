@@ -16,3 +16,9 @@ site:
       path: ministry-operations
       content:
         directory: ./ministry-admin
+    - type: space
+      key: space-attendance-admin
+      title: 송림소년부 출석부 관리자 공식 가이드
+      path: attendance-admin
+      content:
+        directory: ./attendance-admin
