@@ -1,5 +1,4 @@
 $schema: https://api.gitbook.com/gitbook-docs.yaml
-version: 1
 site:
   title: 송림소년부 JoyGrow 공식 가이드
   structure:
@@ -9,7 +8,7 @@ site:
       path: joygrow-docs
       default: true
       content:
-        directory: .
+        directory: ./
     - type: space
       key: space-joygrow-ministry-ops
       title: JoyGrow 교역자 운영 노트
@@ -28,3 +27,10 @@ site:
       path: student-guide
       content:
         directory: ./student-guide
+    - type: space
+      key: space-1
+      title: Untitled
+      path: untitled
+      draft: true
+      content:
+        directory: ./untitled
