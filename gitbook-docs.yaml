@@ -22,3 +22,9 @@ site:
       path: attendance-admin
       content:
         directory: ./attendance-admin
+    - type: space
+      key: space-joygrow-student-guide
+      title: JoyGrow 주인공 안내
+      path: student-guide
+      content:
+        directory: ./student-guide
