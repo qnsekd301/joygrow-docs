@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f8f8fa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="주일보고">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>서현중등부 주일보고</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --bg:#f8f8fa;
+      --surface:#ffffff;
+      --text:#111216;
+      --muted:#7f8490;
+      --line:#eceef2;
+      --field:#f7f8fa;
+      --accent:#5a58ee;
+      --accent-strong:#4744d6;
+      --accent-soft:#efefff;
+      --success:#0b805b;
+      --success-bg:#eaf8f2;
+      --danger:#bd3c57;
+      --danger-bg:#fff0f3;
+      --shadow:0 24px 70px rgba(22,24,36,.08);
+    }
+    *{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      margin:0;
+      min-width:320px;
+      min-height:100vh;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 12% -8%,rgba(90,88,238,.10),transparent 30%),
+        radial-gradient(circle at 100% 0%,rgba(128,92,255,.06),transparent 26%),
+        var(--bg);
+      font-family:Pretendard,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    button,input{font:inherit}
+    button{-webkit-tap-highlight-color:transparent}
+    .viewport{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding:34px 18px;
+    }
+    .page{width:min(900px,100%)}
+    .header{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      padding:6px 2px 22px;
+    }
+    .kicker{
+      margin-bottom:6px;
+      color:var(--accent);
+      font-size:11px;
+      font-weight:850;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.04;
+      letter-spacing:-.055em;
+      font-weight:860;
+    }
+    .date{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:14px;
+      font-weight:650;
+      letter-spacing:-.015em;
+    }
+    .status{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      min-height:34px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#eff0f3;
+      color:#727986;
+      font-size:12px;
+      font-weight:800;
+      transition:.15s ease;
+    }
+    .status::before{
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:currentColor;
+      opacity:.78;
+    }
+    .status.edit{background:var(--accent-soft);color:var(--accent-strong)}
+    .status.success{background:var(--success-bg);color:var(--success)}
+    .status.error{background:var(--danger-bg);color:var(--danger)}
+    .services{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    .service{
+      overflow:hidden;
+      border:1px solid rgba(17,18,22,.07);
+      border-radius:24px;
+      background:rgba(255,255,255,.96);
+      box-shadow:0 10px 30px rgba(24,27,39,.035);
+    }
+    .service-head{
+      padding:19px 20px 15px;
+      border-bottom:1px solid var(--line);
+    }
+    .service-title{
+      font-size:22px;
+      font-weight:850;
+      letter-spacing:-.045em;
+    }
+    .fields{padding:5px 18px}
+    .field{
+      min-height:69px;
+      display:grid;
+      grid-template-columns:1fr 138px;
+      align-items:center;
+      gap:18px;
+      border-bottom:1px solid #f0f1f4;
+    }
+    .field:last-child{border-bottom:0}
+    .label{
+      color:#3c414b;
+      font-size:14px;
+      font-weight:730;
+    }
+    input{
+      width:100%;
+      height:46px;
+      border:1px solid #e4e6eb;
+      border-radius:14px;
+      outline:none;
+      background:var(--field);
+      color:#13151b;
+      padding:0 14px;
+      text-align:right;
+      font-size:19px;
+      font-weight:820;
+      font-variant-numeric:tabular-nums;
+      transition:border-color .14s ease,box-shadow .14s ease,background .14s ease;
+    }
+    input:focus{
+      border-color:#7775ef;
+      background:#fff;
+      box-shadow:0 0 0 4px rgba(90,88,238,.09);
+    }
+    .notice{
+      display:none;
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      background:var(--danger-bg);
+      color:var(--danger);
+      font-size:13px;
+      font-weight:720;
+    }
+    .actions{
+      margin-top:15px;
+      padding:10px;
+      border:1px solid rgba(17,18,22,.055);
+      border-radius:20px;
+      background:rgba(255,255,255,.76);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+    }
+    .save{
+      width:100%;
+      height:56px;
+      border:0;
+      border-radius:16px;
+      cursor:pointer;
+      background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+      color:#fff;
+      font-size:15px;
+      font-weight:850;
+      letter-spacing:-.02em;
+      box-shadow:0 12px 28px rgba(71,68,214,.21);
+      transition:transform .14s ease,box-shadow .14s ease,opacity .14s ease;
+    }
+    .save:hover:not(:disabled){
+      transform:translateY(-1px);
+      box-shadow:0 16px 34px rgba(71,68,214,.26);
+    }
+    .save:active:not(:disabled){transform:translateY(0)}
+    .save:disabled{opacity:.65;cursor:default}
+    .install-backdrop{
+      position:fixed;
+      inset:0;
+      z-index:100;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(14,16,24,.42);
+      backdrop-filter:blur(9px);
+      -webkit-backdrop-filter:blur(9px);
+    }
+    .install-backdrop.show{display:flex}
+    .install-card{
+      width:min(420px,100%);
+      border:1px solid rgba(255,255,255,.82);
+      border-radius:28px;
+      background:rgba(255,255,255,.985);
+      padding:23px;
+      box-shadow:0 32px 90px rgba(15,18,29,.24);
+      animation:pop .2s ease-out;
+    }
+    @keyframes pop{
+      from{opacity:0;transform:translateY(12px) scale(.98)}
+      to{opacity:1;transform:none}
+    }
+    .app-icon{
+      width:58px;
+      height:58px;
+      margin-bottom:16px;
+      border-radius:18px;
+      background:linear-gradient(145deg,#7472fa,#4b49df);
+      box-shadow:0 12px 28px rgba(75,73,223,.25);
+      display:grid;
+      place-items:center;
+    }
+    .app-icon svg{width:31px;height:31px}
+    .install-title{
+      margin:0;
+      font-size:22px;
+      line-height:1.18;
+      letter-spacing:-.045em;
+      font-weight:860;
+    }
+    .install-copy{
+      margin:8px 0 18px;
+      color:#747a86;
+      font-size:14px;
+      line-height:1.6;
+      font-weight:550;
+    }
+    .ios-help{
+      display:none;
+      margin:-4px 0 17px;
+      padding:13px 14px;
+      border-radius:14px;
+      background:#f5f6f8;
+      color:#515865;
+      font-size:13px;
+      line-height:1.65;
+    }
+    .ios-help.show{display:block}
+    .install-primary,.install-secondary{
+      width:100%;
+      height:49px;
+      border-radius:14px;
+      font-weight:820;
+      cursor:pointer;
+    }
+    .install-primary{
+      border:0;
+      background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+      color:#fff;
+    }
+    .install-secondary{
+      margin-top:7px;
+      border:0;
+      background:transparent;
+      color:#7c828e;
+    }
+    @media(max-width:680px){
+      body{background:#fff}
+      .viewport{display:block;padding:0}
+      .page{width:100%;min-height:100vh}
+      .header{
+        align-items:center;
+        padding:23px 16px 18px;
+      }
+      .kicker{display:none}
+      h1{font-size:24px}
+      .date{margin-top:6px;font-size:13px}
+      .status{min-height:30px;padding:6px 9px;font-size:11px}
+      .services{
+        grid-template-columns:1fr;
+        gap:11px;
+        padding:0 12px;
+      }
+      .service{
+        border-radius:20px;
+        box-shadow:none;
+      }
+      .service-head{padding:15px 16px 12px}
+      .service-title{font-size:19px}
+      .fields{padding:3px 13px}
+      .field{
+        min-height:61px;
+        grid-template-columns:1fr 126px;
+      }
+      input{height:43px;font-size:17px}
+      .notice{margin:11px 12px 0}
+      .actions{
+        position:sticky;
+        bottom:0;
+        z-index:5;
+        margin:12px 0 0;
+        padding:10px 12px max(10px,env(safe-area-inset-bottom));
+        border-width:1px 0 0;
+        border-radius:0;
+        background:rgba(255,255,255,.92);
+      }
+      .save{height:53px}
+      .install-backdrop{
+        align-items:flex-end;
+        padding:0;
+      }
+      .install-card{
+        width:100%;
+        border-radius:28px 28px 0 0;
+        padding:23px 18px calc(18px + env(safe-area-inset-bottom));
+      }
+    }
+    @media(max-width:380px){
+      .header{padding-inline:13px}
+      .services{padding-inline:10px}
+      .field{grid-template-columns:1fr 112px}
+    }
+  </style>
+</head>
+<body>
+  <main class="viewport">
+    <section class="page">
+      <header class="header">
+        <div>
+          <div class="kicker">Sunday Report</div>
+          <h1>서현중등부 주일보고</h1>
+          <div class="date" id="dateLabel"></div>
+        </div>
+        <div class="status" id="status">확인 중</div>
+      </header>
+
+      <div class="services" id="services"></div>
+      <div class="notice" id="notice" role="alert"></div>
+
+      <div class="actions">
+        <button class="save" id="saveButton" type="button"><span id="saveText">올리기</span></button>
+      </div>
+    </section>
+  </main>
+
+  <div class="install-backdrop" id="installBackdrop" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+    <section class="install-card">
+      <div class="app-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none">
+          <rect width="64" height="64" rx="18" fill="none"/>
+          <path d="M32 15V49M20 27H44" stroke="white" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="install-title" id="installTitle">주일보고 앱 설치</h2>
+      <p class="install-copy" id="installCopy">홈 화면에서 바로 열 수 있도록 설치합니다.</p>
+      <div class="ios-help" id="iosHelp">Safari의 <strong>공유</strong> 버튼을 누른 뒤 <strong>홈 화면에 추가</strong>를 선택해주세요.</div>
+      <button class="install-primary" id="installButton" type="button">설치하기</button>
+      <button class="install-secondary" id="installLater" type="button">나중에</button>
+    </section>
+  </div>
+
+  <script>
+    const GAS_URL='https://script.google.com/macros/s/AKfycbxJ1NDZxTpDsaVkb7GqlesBvlM_9lBBv2s4f53chZdqbHVnLZqOfVT1qzXVfsXW7qxA/exec';
+    const ITEM='서현중등부';
+    const SERVICES=['1부','2부'];
+    const METRICS=['학생','교사','방문자','등반자','헌금'];
+    const LABELS=SERVICES.flatMap(service=>METRICS.map(metric=>service+' '+metric));
+
+    const statusEl=document.getElementById('status');
+    const noticeEl=document.getElementById('notice');
+    const saveButton=document.getElementById('saveButton');
+    const saveText=document.getElementById('saveText');
+    const installBackdrop=document.getElementById('installBackdrop');
+    const installButton=document.getElementById('installButton');
+    const installLater=document.getElementById('installLater');
+    const installCopy=document.getElementById('installCopy');
+    const iosHelp=document.getElementById('iosHelp');
+
+    let exists=false;
+    let dirty=false;
+    let deferredInstallPrompt=null;
+
+    function seoulSunday(){
+      const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+      const get=type=>Number(parts.find(part=>part.type===type)?.value||0);
+      const date=new Date(Date.UTC(get('year'),get('month')-1,get('day')));
+      date.setUTCDate(date.getUTCDate()-date.getUTCDay());
+      return date.getUTCFullYear()+'-'+String(date.getUTCMonth()+1).padStart(2,'0')+'-'+String(date.getUTCDate()).padStart(2,'0');
+    }
+
+    const weekKey=seoulSunday();
+    const draftKey='seohyun-middle-report:'+weekKey;
+    const [year,month,day]=weekKey.split('-');
+    document.getElementById('dateLabel').textContent=year+'.'+month+'.'+day+' 주일';
+
+    SERVICES.forEach(service=>{
+      const card=document.createElement('section');
+      card.className='service';
+      card.innerHTML='<div class="service-head"><div class="service-title">'+service+'</div></div><div class="fields"></div>';
+      const fields=card.querySelector('.fields');
+
+      METRICS.forEach(metric=>{
+        const label=service+' '+metric;
+        const row=document.createElement('label');
+        row.className='field';
+        row.innerHTML='<span class="label">'+metric+'</span><input id="'+label+'" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-label="'+label+'">';
+        const input=row.querySelector('input');
+        input.addEventListener('input',()=>{
+          input.value=input.value.replace(/[^0-9]/g,'');
+          dirty=true;
+          setStatus(exists?'수정 중':'작성 중','edit');
+          hideNotice();
+          saveDraft();
+        });
+        fields.appendChild(row);
+      });
+
+      document.getElementById('services').appendChild(card);
+    });
+
+    function formValues(asNumbers=false){
+      const result={};
+      LABELS.forEach(label=>{
+        const raw=document.getElementById(label).value;
+        result[label]=asNumbers?Number(raw||0):raw;
+      });
+      return result;
+    }
+
+    function applyValues(values){
+      LABELS.forEach(label=>{
+        const value=values?.[label];
+        document.getElementById(label).value=value===undefined||value===null?'':String(value);
+      });
+    }
+
+    function saveDraft(){
+      try{localStorage.setItem(draftKey,JSON.stringify({values:formValues(false)}))}catch{}
+    }
+
+    function readDraft(){
+      try{
+        const raw=localStorage.getItem(draftKey);
+        return raw?JSON.parse(raw)?.values||null:null;
+      }catch{return null}
+    }
+
+    function clearDraft(){try{localStorage.removeItem(draftKey)}catch{}}
+
+    function setStatus(text,type=''){
+      statusEl.textContent=text;
+      statusEl.className='status'+(type?' '+type:'');
+    }
+
+    function showNotice(text){
+      noticeEl.textContent=text;
+      noticeEl.style.display='block';
+    }
+
+    function hideNotice(){
+      noticeEl.textContent='';
+      noticeEl.style.display='none';
+    }
+
+    function findDepartment(node){
+      if(!node||typeof node!=='object'||Array.isArray(node))return null;
+      if(node[ITEM]&&typeof node[ITEM]==='object')return node[ITEM];
+      for(const child of Object.values(node)){
+        const found=findDepartment(child);
+        if(found)return found;
+      }
+      return null;
+    }
+
+    async function fetchExisting(){
+      const query=new URLSearchParams({mode:'item',weekKeys:weekKey,item:ITEM});
+      const response=await fetch(GAS_URL+'?'+query.toString(),{cache:'no-store'});
+      const json=await response.json();
+      if(!response.ok||!json?.success)throw new Error('read_failed');
+      return findDepartment(json?.data?.[weekKey]);
+    }
+
+    async function load(){
+      const draft=readDraft();
+      if(draft){
+        applyValues(draft);
+        dirty=true;
+      }
+
+      try{
+        const remote=await fetchExisting();
+        exists=Boolean(remote);
+        if(!dirty&&remote)applyValues(remote);
+        setStatus(dirty?(exists?'수정 중':'작성 중'):(exists?'기존 입력':'신규'),dirty?'edit':'');
+        saveText.textContent=exists?'수정 저장':'올리기';
+      }catch{
+        setStatus('연결 오류','error');
+        showNotice('기존 입력을 불러오지 못했습니다');
+      }
+    }
+
+    async function save(){
+      if(saveButton.disabled)return;
+      saveButton.disabled=true;
+      saveText.textContent='저장 중';
+      setStatus('저장 중');
+      hideNotice();
+
+      try{
+        const response=await fetch(GAS_URL,{
+          method:'POST',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body:JSON.stringify({
+            weekKey,
+            groupKey:'주일학교',
+            itemName:ITEM,
+            formData:formValues(true)
+          })
+        });
+        const json=await response.json();
+        if(!response.ok||!json?.success)throw new Error('save_failed');
+
+        exists=true;
+        dirty=false;
+        clearDraft();
+        setStatus('저장 완료','success');
+        saveText.textContent='수정 저장';
+      }catch{
+        saveDraft();
+        setStatus('저장 실패','error');
+        showNotice('저장하지 못했습니다');
+        saveText.textContent=exists?'수정 저장':'올리기';
+      }finally{
+        saveButton.disabled=false;
+      }
+    }
+
+    function standalone(){
+      return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+    }
+
+    function isIos(){
+      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+
+    function showInstall(kind){
+      if(standalone())return;
+
+      if(kind==='ios'){
+        installCopy.textContent='iPhone에서는 Apple 정책상 설치를 자동 실행할 수 없습니다.';
+        iosHelp.classList.add('show');
+        installButton.textContent='설치 방법 보기';
+      }else{
+        installCopy.textContent='홈 화면에서 바로 열 수 있도록 설치합니다.';
+        iosHelp.classList.remove('show');
+        installButton.textContent='설치하기';
+      }
+
+      installBackdrop.classList.add('show');
+    }
+
+    addEventListener('beforeinstallprompt',event=>{
+      event.preventDefault();
+      deferredInstallPrompt=event;
+      setTimeout(()=>showInstall('native'),250);
+    });
+
+    addEventListener('appinstalled',()=>{
+      deferredInstallPrompt=null;
+      installBackdrop.classList.remove('show');
+    });
+
+    installButton.addEventListener('click',async()=>{
+      if(deferredInstallPrompt){
+        await deferredInstallPrompt.prompt();
+        const result=await deferredInstallPrompt.userChoice;
+        if(result.outcome==='accepted')installBackdrop.classList.remove('show');
+        deferredInstallPrompt=null;
+        return;
+      }
+
+      if(isIos()){
+        iosHelp.classList.add('show');
+        installButton.textContent='아래 안내대로 추가해주세요';
+        return;
+      }
+
+      installBackdrop.classList.remove('show');
+    });
+
+    installLater.addEventListener('click',()=>installBackdrop.classList.remove('show'));
+
+    if('serviceWorker' in navigator){
+      addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+    }
+
+    saveButton.addEventListener('click',save);
+    load();
+
+    addEventListener('load',()=>{
+      if(isIos()&&!standalone())setTimeout(()=>showInstall('ios'),550);
+    });
+  </script>
+</body>
+</html>
