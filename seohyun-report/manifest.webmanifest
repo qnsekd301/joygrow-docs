@@ -1,0 +1,19 @@
+{
+  "name": "서현중등부 주일보고",
+  "short_name": "주일보고",
+  "description": "서현중등부 주일 출석 및 헌금 보고",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f8fa",
+  "theme_color": "#5a58ee",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
