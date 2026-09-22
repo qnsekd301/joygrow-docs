@@ -1,29 +1,29 @@
 $schema: https://api.gitbook.com/gitbook-docs.yaml
 site:
-  title: 송림소년부 JoyGrow 공식 가이드
+  title: 송림소년부 앱 사용 설명서
   structure:
     - type: space
       key: space-joygrow-docs
-      title: 송림소년부 JoyGrow 공식 가이드
+      title: 송림소년부 앱 사용 설명서
       path: joygrow-docs
       default: true
       content:
         directory: ./
     - type: space
       key: space-joygrow-ministry-ops
-      title: JoyGrow 교역자 운영 노트
+      title: 교역자 운영 안내
       path: ministry-operations
       content:
         directory: ./ministry-admin
     - type: space
       key: space-attendance-admin
-      title: 송림소년부 출석부 관리자 공식 가이드
+      title: 송림소년부 출석부 사용 가이드
       path: attendance-admin
       content:
         directory: ./attendance-admin
     - type: space
       key: space-joygrow-student-guide
-      title: JoyGrow 주인공 안내
+      title: JoyGrow 학생 안내
       path: student-guide
       content:
         directory: ./student-guide

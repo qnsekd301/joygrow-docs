@@ -9,7 +9,7 @@
 | 영역 | 확인 내용 |
 |---|---|
 | 운영 현황 | 연결 학생 · 진행 이벤트 · 확인 필요 숫자 |
-| 랭킹 | 반·EXP·출석·오목 순위 흐름 |
+| 랭킹 | 반·EXP·출석·어묵 순위 흐름 |
 | 학생별 포인트 | 현재 포인트와 조정 내역 |
 | 성장 활동 | 활동 이름 · 포인트 · EXP · 주간 한도 |
 | 이벤트 | 시작일·종료일·활성 상태 |
@@ -27,8 +27,6 @@
 
 원본 출석·교사 지급·이벤트 기록을 먼저 찾습니다. 결과 숫자를 직접 맞추기보다 잘못된 지급 건을 취소해 감사 기록이 남도록 처리합니다.
 
-{% content-ref url="https://organization-zmn.gitbook.io/docs/undefined-1/points-and-exp" %}
-[포인트와 EXP 기준 보기](https://organization-zmn.gitbook.io/docs/undefined-1/points-and-exp)
-{% endcontent-ref %}
+[포인트와 EXP 기준 보기](../student/points-and-exp.md)
 
 > 포인트는 결과이고 출석과 실제 관찰 기록이 원본입니다.

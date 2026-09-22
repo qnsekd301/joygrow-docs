@@ -1,10 +1,12 @@
 # 목차
 
-- [출석부 관리자 공식 가이드](README.md)
+- [출석부 사용 가이드](README.md)
 - [출석부 한눈에 보기](overview.md)
+- [선생님 사용법](teacher-guide.md)
+- [공지와 월간 사역계획](announcements-and-plan.md)
 - [결석과 장결 관리 · 목양의 시작](absence-and-care.md)
 - [화면 구성과 이동 방법](layout-and-navigation.md)
-- [로그인과 관리자 홈](login-and-home.md)
+- [로그인과 홈](login-and-home.md)
 - [빠른 검색과 공통 기능](search-and-shortcuts.md)
 - [주일 출석 기록](attendance.md)
 - [목양센터](pastoral-center.md)
